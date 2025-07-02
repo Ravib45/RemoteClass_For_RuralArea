@@ -1,0 +1,54 @@
+/* client/src/components/Header.css */
+.header-container {
+    grid-area: header;
+    /* Assigns to the 'header' area in the grid layout */
+    background-color: #fff;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow for depth */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    /* Remove underline from link */
+    color: #333;
+    /* Inherit color or set specific */
+}
+
+.header-logo {
+    height: 30px;
+    /* Adjust logo size */
+    margin-right: 10px;
+}
+
+.header-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Spacing between icons/elements */
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    /* Make it round */
+    object-fit: cover;
+    /* Ensure image covers the area */
+    cursor: pointer;
+}

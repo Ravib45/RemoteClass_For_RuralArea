@@ -1,0 +1,125 @@
+/* client/src/pages/Dashboard.css */
+
+.dashboard-page-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.1);
+}
+
+/* Header */
+.dashboard-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 1rem;
+}
+
+.dashboard-header-section h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Charts flex container */
+.charts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Each chart card takes ~32% width to fit 3 side by side */
+.charts-grid>* {
+    flex: 1 1 32%;
+    min-width: 280px;
+    box-sizing: border-box;
+}
+
+/* Chart card styling */
+.chart-card {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Data Table Section */
+.data-table-section {
+    /* Optional extra styling */
+}
+
+.data-table-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Tablet: 2 charts per row */
+@media (max-width: 992px) {
+    .charts-grid>* {
+        flex: 1 1 48%;
+        min-width: auto;
+    }
+}
+
+/* Mobile: stack charts vertically */
+@media (max-width: 480px) {
+    .charts-grid {
+        flex-direction: column;
+    }
+
+    .charts-grid>* {
+        flex: 1 1 100%;
+    }
+
+    .dashboard-header-section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+.chart-3d-wrapper {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    animation: chartPop 0.6s ease-out forwards;
+}
+
+@keyframes chartPop {
+    0% {
+        transform: rotateX(25deg) scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotateX(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Axis 3D animation effect */
+.axis-3d {
+    transform-origin: left;
+    animation: axisSlideIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes axisSlideIn {
+    0% {
+        transform: translateY(-10px) rotateY(45deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0) rotateY(0deg);
+        opacity: 1;
+    }
+}

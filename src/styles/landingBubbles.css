@@ -1,0 +1,19 @@
+/* Bubble background */
+.bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 20%, #ffffff11 1%, transparent 40%),
+        radial-gradient(circle at 80% 80%, #ffffff0f 1%, transparent 40%);
+    animation: bubbleMove 20s linear infinite;
+}
+
+@keyframes bubbleMove {
+    0% {
+        background-position: 0 0, 100% 100%;
+    }
+
+    100% {
+        background-position: 100% 100%, 0 0;
+    }
+}

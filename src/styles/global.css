@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300;
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes numberFall {
+    0% {
+        top: -10%;
+        opacity: 0;
+        transform: translateY(0) scale(0.8);
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        top: 110%;
+        opacity: 0;
+        transform: translateY(200px) scale(1.2);
+    }
+}
+
+.animate-numberFall {
+    position: absolute;
+    animation-name: numberFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@layer utilities {
+    @keyframes fall {
+        0% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(100vh);
+            opacity: 1;
+        }
+    }
+
+    .animate-fall {
+        animation: fall 8s linear infinite;
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee-reverse {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee-reverse {
+    animation: marquee-reverse linear infinite;
+}
