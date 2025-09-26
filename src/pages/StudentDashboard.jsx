@@ -22,9 +22,12 @@ import {
     CalendarDays,
     UploadCloud,
     File,
+    Menu, // Added for the hamburger menu
+    X, // Added for the close button
+    Mail // Added for the profile section
 } from "lucide-react";
 
-// Helper components for a cleaner look
+// Helper component for a cleaner look
 const StatCard = ({ title, value, icon, color }) => (
     <div className={`bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 ${color} transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl`}>
         <div className="flex items-center justify-between">
@@ -48,6 +51,7 @@ const BadgeCard = ({ title, description, icon, color }) => (
 const StudentDashboard = () => {
     const [activePage, setActivePage] = useState("overview");
     const [darkMode, setDarkMode] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // New state for mobile sidebar
 
     // Load dark mode preference from local storage on component mount
     useEffect(() => {
@@ -311,9 +315,9 @@ const StudentDashboard = () => {
                         {resources.map((file) => (
                             <div
                                 key={file.id}
-                                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex justify-between items-center hover:shadow-xl transition duration-300"
+                                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col sm:flex-row justify-between items-center hover:shadow-xl transition duration-300"
                             >
-                                <div className="flex items-center">
+                                <div className="flex items-center mb-4 sm:mb-0">
                                     <File size={32} className="mr-4 text-gray-600 dark:text-gray-400 flex-shrink-0" />
                                     <div>
                                         <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">{file.title}</h3>
@@ -352,8 +356,8 @@ const StudentDashboard = () => {
                                 key={a.id}
                                 className="bg-yellow-100 dark:bg-yellow-900 p-6 rounded-xl shadow-md border-l-4 border-yellow-500 hover:shadow-lg transition duration-150"
                             >
-                                <div className="flex justify-between items-start">
-                                    <p className="font-semibold text-gray-800 dark:text-gray-100 text-lg flex items-center">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                                    <p className="font-semibold text-gray-800 dark:text-gray-100 text-lg flex items-center mb-2 sm:mb-0">
                                         <Bell size={20} className="text-yellow-500 mr-2 flex-shrink-0" />
                                         {a.msg}
                                     </p>
@@ -401,15 +405,29 @@ const StudentDashboard = () => {
     };
 
     return (
-        <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="flex h-screen bg-gray-50 dark:bg-gray-900 font-sans">
+            {/* Mobile Sidebar Toggle Button */}
+            <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="lg:hidden fixed top-1 left-2 z-50 p-2 bg-indigo-700 text-white rounded-full shadow-lg"
+            >
+                {isSidebarOpen ? <X size={24} /> : <Menu size={20} />}
+            </button>
+
             {/* Sidebar */}
-            <aside className="w-64 bg-gradient-to-b from-blue-900 to-indigo-800 text-white flex flex-col p-6 shadow-xl flex-shrink-0">
+            <aside
+                className={`fixed inset-y-0 left-0  w-64 bg-gradient-to-b from-blue-900 to-indigo-800 text-white flex flex-col p-6 shadow-xl z-40 transition-transform duration-300 ease-in-out lg:static lg:flex-shrink-0 lg:translate-x-0
+                ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+            >
                 <h2 className="text-2xl font-extrabold mb-10 text-yellow-400">🎓 RRC Student Portal</h2>
                 <nav className="flex flex-col space-y-3 flex-grow">
                     {menu.map((item) => (
                         <button
                             key={item.id}
-                            onClick={() => setActivePage(item.id)}
+                            onClick={() => {
+                                setActivePage(item.id);
+                                setIsSidebarOpen(false); // Close sidebar on click
+                            }}
                             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left font-medium transition duration-200 ease-in-out ${activePage === item.id
                                 ? "bg-yellow-400 text-blue-900 font-extrabold shadow-md transform scale-[1.02]"
                                 : "hover:bg-indigo-700 text-gray-200"
@@ -433,18 +451,26 @@ const StudentDashboard = () => {
                 </div>
             </aside>
 
+            {/* Mobile Overlay */}
+            {isSidebarOpen && (
+                <div
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+                ></div>
+            )}
+
             {/* Main Content */}
-            <main className="flex-1 p-10 overflow-y-auto">
+            <main className="flex-1 p-4 sm:p-6 lg:p-10 overflow-y-auto">
                 {/* Topbar */}
-                <div className="flex justify-between items-center mb-10 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border-b-4 border-blue-500">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 lg:mb-10 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border-b-4 border-blue-500">
                     <div>
                         <p className="text-xl text-gray-500 dark:text-gray-400 font-medium">Welcome Back, Anjali!</p>
-                        <h1 className="text-4xl font-extrabold capitalize text-gray-800 dark:text-gray-100">
+                        <h1 className="text-3xl lg:text-4xl font-extrabold capitalize text-gray-800 dark:text-gray-100">
                             {menu.find(item => item.id === activePage)?.label}
                         </h1>
                     </div>
-                    <div className="flex items-center gap-4">
-                        <span className="text-lg font-semibold text-gray-700 dark:text-gray-200">{student.name}</span>
+                    <div className="flex items-center gap-4 mt-4 sm:mt-0">
+                        <span className="text-lg font-semibold text-gray-700 dark:text-gray-200 hidden sm:block">{student.name}</span>
                         <img
                             src="https://i.pravatar.cc/48?img=4"
                             alt="avatar"
